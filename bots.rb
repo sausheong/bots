@@ -1,64 +1,62 @@
 require 'bundler'
 Bundler.require
 require 'socket'
-require 'irb'
 
-module Bot
+module Bots
 
-  # Subclass the Robot class for your bot
-  class Robot
+  # Subclass the Controller class for your bot
+  class Controller
+    attr :engine_type
     
-    def to_s
-      self.class.name
-    end
-    
-    # start up the irb REPL
-    def start
-      suppress_warnings {
-        IRB.setup nil
-        IRB.conf[:AT_EXIT] << lambda {@engine.stop}
-        IRB.conf[:PROMPT][:BOT_PROMPT] = {
-          :PROMPT_I => "%m > ",
-          :PROMPT_S => "%m ",
-          :PROMPT_C => "%m* ",
-          :RETURN => "%s\n" 
-        }
-        IRB.conf[:PROMPT_MODE] = :BOT_PROMPT
-        IRB.conf[:MAIN_CONTEXT] = IRB::Irb.new.context
-        require 'irb/ext/multi-irb'
-        IRB.irb nil, self
-      }
+    def initialize(type=:sim)
+      @engine_type = engine type
     end
 
     # select the engine -- either a simulator, the real robot or dump the commands to file
     def engine(type=:file)
-      if @engine.nil?        
+      if @engine_type.nil?        
         if type == :rpi
-          @engine = Serial.new '/dev/ttyAMA0', 9600
+          @engine_type = Serial.new '/dev/ttyAMA0', 9600
         elsif type == :bt
-          @engine = Serial.new '/dev/tty.TenkuLabs-DevB', 9600
+          @engine_type = Serial.new '/dev/tty.TenkuLabs-DevB', 9600
         elsif type == :sim
-          @engine = TCPSim.new
+          @engine_type = TCPSim.new
         else
-          @engine = FileSim.new
+          @engine_type = FileSim.new
         end
       end
-      return @engine
-    end        
+      return @engine_type
+    end   
+    
+    def execute(sequence, speed=100)
+      engine.write "#{sequence}T#{speed}\r\n"
+    end             
   end
   
   # Connect real-time to the simulator
   class TCPSim
     def initialize
-      start      
-      @sock = TCPSocket.new('localhost', 5555)      
-    end
-    
-    def start
       @process = ChildProcess.build("./sim")
       @process.detach
       @process.start      
-      sleep 1
+
+      sim_started = false
+      until sim_started
+        begin
+          connect
+          sim_started = true
+        rescue
+          next
+        end
+      end
+
+      Pry.config.hooks.add_hook(:after_session, :stop_engine) do
+        @process.stop
+      end  
+    end
+    
+    def connect
+      @sock = TCPSocket.new('localhost', 5555)
     end
     
     def stop
@@ -115,7 +113,7 @@ module Bot
 
   # models the servo
   class Servo
-    attr_accessor :number, :serial
+    attr_accessor :number
     
     def initialize(n)
       @number = n      
@@ -125,16 +123,5 @@ module Bot
       points = (2000 * deg.to_f/180) + 500
       "##{@number}P#{points.to_i}"
     end
-  end
-end
-
-# Suppress warnings for IRB
-module Kernel
-  def suppress_warnings
-    original_verbosity = $VERBOSE
-    $VERBOSE = nil
-    result = yield
-    $VERBOSE = original_verbosity
-    return result
   end
 end
