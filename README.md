@@ -1,12 +1,16 @@
 # Bots
 
-A simple platform for controlling robots using Ruby.
+A simple library for controlling robots using Ruby.
 
 ## What is this?
 
-Bots is a simple platform for controlling robots. You can use the platform to create controller scripts that manipulate robots. The current version only controls [legged robots](http://en.wikipedia.org/wiki/Legged_robot). The example `hex.rb` controller script allow you to control a [hexapod robot](http://en.wikipedia.org/wiki/Hexapod_(robotics)).
+Bots is a simple library for controlling robots. You can use the library to create controller scripts that manipulate robots. The current version only controls [legged robots](http://en.wikipedia.org/wiki/Legged_robot). The example `hex.rb` controller script allow you to control a [hexapod robot](http://en.wikipedia.org/wiki/Hexapod_(robotics)).
 
-Bots has a built-in simulator that can be used to test run your controller scripts. You can either run it real-time or dump the output of your controller script to a sequence file to be loaded on the simulator.
+Bots has a built-in [simulator](https://github.com/billhsu/hexapod-sim) created using the [Bullet Physics Library](http://bulletphysics.org). You can use the simulator to test run your controller scripts. You can either run it real-time or dump the output of your controller script to a sequence file to be loaded on the simulator.
+
+[![Bots library simulator demo](http://img.youtube.com/vi/nNom1KyaSGU/0.jpg)](http://www.youtube.com/watch?v=nNom1KyaSGU)
+
+This library uses the [hexapod simulator](https://github.com/billhsu/hexapod-sim) by [Bill Hsu](https://github.com/billhsu).
 
 ## How to use
 
@@ -66,3 +70,4 @@ the `Leg3DOF` has a method `actuate` that moves the 3 servos controlling the leg
 
 
 For more information please read the source code for the sample hexapod `hex.rb`
+
