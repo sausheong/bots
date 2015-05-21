@@ -19,8 +19,18 @@ To run this in simulator mode:
 1. Clone this repository
 2. Run `bundle install` to install the files
 3. Create a robot controller file by requiring `bots.rb`
-4. Run the robot controller file in REPL using pry `pry -r ./hex.rb`
+4. Run the robot controller file in REPL using pry `pry -r ./hex.rb` (assuming your controller file is named `hex.rb`)
 5. To exit the REPL enter `!!!` and press enter
+
+To run this in the sequence dump mode:
+
+1. Clone this repository
+2. Run `bundle install` to install the files
+3. Create a robot controller file by requiring `bots.rb`
+4. Run the robot controller file in REPL using pry `pry -r ./hex.rb`
+5. When have finished your activities the REPL would have dumped your activities into a `.seq` file
+6. Exit the REPL
+7. Run `./load.rb xxx.seq` where `xxx.seq` is your sequence file
 
 
 ## How to create a robot controller 
