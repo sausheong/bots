@@ -98,5 +98,5 @@ class Hexapod < Controller
   
 end
 
-hex = Hexapod.new(:sim)
+hex = Hexapod.new(:file)
 hex.pry

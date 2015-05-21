@@ -37,7 +37,7 @@ end
 
 ### Create a constructor for your controller
 
-You should call the constructor of your superclass with the type of engine, create legs and do whatever else you want to initialize the robot.
+You should call the constructor of your superclass with the type of engine, create legs and do whatever else you want to initialize the robot. In the example below I am creating legs for a hexapod i.e. robot with 6 legs. 
 
 ```ruby
 def initialize(type=:sim)
