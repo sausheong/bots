@@ -83,7 +83,6 @@ module Bots
 
   # Models a leg on the hexapod
   class Leg3DOF
-    attr_accessor :side, :coxa, :femur, :tibia
     
     def initialize(side, coxa, femur, tibia)
       @side = side
@@ -113,7 +112,6 @@ module Bots
 
   # models the servo
   class Servo
-    attr_accessor :number
     
     def initialize(n)
       @number = n      

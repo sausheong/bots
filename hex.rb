@@ -71,6 +71,7 @@ class Hexapod < Controller
         tripod_s3; sleep delay
         tripod_s4; sleep delay
       end
+      all_stand
     end
   end
   
@@ -96,7 +97,39 @@ class Hexapod < Controller
     leg.actuate 90, 30, 30
   end
   
+  def all_calibrate
+    all { | leg| calibrate leg }
+  end
+  
+  def all_rest
+    all { | leg| rest leg }
+  end
+
+  def all_stand
+    all { | leg| stand leg }
+  end
+
+  def all_tiptoe
+    all { | leg| tiptoe leg }
+  end
+
+  def wave
+    move :front_left, 90, 30, 180
+    sleep 0.2
+    move :front_left, 180, 30, 180
+    sleep 0.2
+    move :front_left, 90, 30, 180
+    sleep 0.2
+    move :front_left, 180, 30, 180
+    sleep 0.2
+    move :front_left, 90, 30, 180
+    sleep 0.2
+    move :front_left, 90, 100, 70
+    sleep 0.2
+  end
+
+  
 end
 
-hex = Hexapod.new(:file)
+hex = Hexapod.new
 hex.pry
