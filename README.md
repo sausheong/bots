@@ -12,6 +12,11 @@ Bots has a built-in [simulator](https://github.com/billhsu/hexapod-sim) created 
 
 This library uses the [hexapod simulator](https://github.com/billhsu/hexapod-sim) by [Bill Hsu](https://github.com/billhsu).
 
+Here's a hexapod controlled using Bots in action.
+
+[![Bots hexapod in action](http://img.youtube.com/vi/xJRx2cjrmSY/0.jpg)](http://www.youtube.com/watch?v=xJRx2cjrmSY)
+
+
 ## How to use
 
 To run this in simulator mode:
